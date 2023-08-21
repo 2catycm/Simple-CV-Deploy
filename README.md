@@ -9,12 +9,12 @@
 确保你的系统上安装了 Python 3.6+，然后使用以下命令安装依赖：
 
 ```bash
-pip install fastapi uvicorn onnxruntime
-# 或者使用
 pip install -r requirements.txt
+# 或者使用虚拟环境+make
+make setup 
 ```
-
-onnxruntime默认使用 CPU_EXECUTION_PROVIDER。
+其中，
+onnxruntime 默认使用 CPU_EXECUTION_PROVIDER。
 要想使用Intel的OpenVINO，可以使用
 ```bash  
 pip uninstall onnxruntime
@@ -26,34 +26,29 @@ pip install onnxruntime-openvino
 在服务器端文件夹中运行以下命令启动服务器：
 
 ```bash
-uvicorn server:app --host 0.0.0.0 --port 8000 --reload
+python app/server.py
+# 或者使用虚拟环境+make
+make run-server
 ```
-
-其中，`server` 是服务器端代码所在的文件名，`app` 是 FastAPI 实例的名称。
 
 ## 客户端
 
-### 安装依赖
-
-确保你的系统上安装了 Python 3.6+，然后使用以下命令安装依赖：
-
-```bash
-pip install requests
-```
 
 ### 运行客户端
 
 在客户端文件夹中运行以下命令以运行客户端：
 
 ```bash
-python client.py
+python app/client.py
+# 或者使用虚拟环境+make
+make run-client
 ```
 
 客户端将会发送图片给服务器并获取处理结果。
 
 ## 注意事项
 
-- 在实际使用中，你需要替换 `path_to_your_model.onnx` 和 `path_to_your_image.jpg` 分别为你的模型路径和图片路径。
+- 在实际使用中，你需要替换`app/config.py`中的 的一些配置，来指定onnx模型、端口号等。
 - 这只是一个基础示例，你可以根据实际需求进行扩展和优化。
 
 
