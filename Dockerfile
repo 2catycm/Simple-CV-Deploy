@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua
 
 # Run the server when the container launches
 # CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
-CMD "python app/server.py"
+CMD "python /app/app/server.py"
