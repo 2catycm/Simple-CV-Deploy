@@ -16,16 +16,16 @@ VENV = venv
 .PHONY: run-server run-client build-image run-tests setup
 
 run-server:
-	python $(SERVER_FILE)
+	$(VENV)/bin/python $(SERVER_FILE)
 
 run-client:
-	python $(CLIENT_FILE)
+	$(VENV)/bin/python $(CLIENT_FILE)
 
 build-image:
 	docker build -t $(IMAGE_NAME) .
 
 run-tests:
-	python -m unittest discover $(TEST_FOLDER)
+	$(VENV)/bin/python -m unittest discover $(TEST_FOLDER)
 
 setup:
 	python3 -m venv $(VENV)

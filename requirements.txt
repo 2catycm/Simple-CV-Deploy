@@ -1,4 +1,12 @@
 fastapi==0.101.1
-onnxruntime==1.16.0
+onnxruntime-openvino==1.15.0
+# onnxruntime==1.16.0
 uvicorn==0.23.2
 requests==2.31.0
+pillow==10.0.0
+python-multipart==0.0.6
+numpy==1.25.2
+
+# 针对应用场景的依赖
+# 这里为了测试，使用手写数字识别来测试效果
+python-mnist==0.7
