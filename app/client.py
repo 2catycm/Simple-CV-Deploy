@@ -18,6 +18,9 @@ import mnist
 mndata = mnist.MNIST(data_directory)  # Replace with the path to your MNIST data folder
 images, labels = mndata.load_testing()
 
+import os
+rank = int(os.environ.get('rank', '0'))
+
 async def load_image_bytes(image_path):
     async with aiofiles.open(image_path, "rb") as f:
         image_data = await f.read()
@@ -59,17 +62,20 @@ async def send_image():
             # suppose_fps = 100
             # suppose_fps = 200
             # suppose_fps = 400
-            suppose_fps = 800
+            # suppose_fps = 800
             # suppose_fps = 1000
+            # suppose_fps = 10000
             wall_time = time.time() - start_time
-            if i%suppose_fps == 0:
+            # if i%suppose_fps == 0:
+            if i%(int(i/wall_time)) == 0:
                 bar.set_postfix({"latency": f"{wall_time/i *1000:.4f} ms", 
                                  "fps": f"{i/wall_time:.4f}", 
-                                 "expected_fps": f"{suppose_fps}", 
-                                 "utilization": f"{i/wall_time/suppose_fps*100:.2f} %",
+                                #  "expected_fps": f"{suppose_fps}", 
+                                #  "utilization": f"{i/wall_time/suppose_fps*100:.2f} %",
                                  "y_pred": result, 
-                                 "y_true": label})
-            await asyncio.sleep(1/suppose_fps)  # Send image every 5 seconds
+                                 "y_true": label, 
+                                 "rank":f"{rank}"})
+            # await asyncio.sleep(1/suppose_fps)  # Send image every 5 seconds
 
 if __name__ == "__main__":
     asyncio.get_event_loop().run_until_complete(send_image())

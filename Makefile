@@ -21,6 +21,12 @@ run-server:
 run-client:
 	$(VENV)/bin/python $(CLIENT_FILE)
 
+run-client-ten:
+	# parallel -j 10  --delay 1 '$(VENV)/bin/python app/client.py  2>output_{}.txt' ::: {1..10}
+	for i in `seq 1 10`; do \
+		rank=$$i nohup $(VENV)/bin/python app/client.py & \
+	done
+
 build-image:
 	docker build -t $(IMAGE_NAME) .
 
