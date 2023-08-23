@@ -1,0 +1,14 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#153404",
+        "titleBar.activeBackground": "#1E4905",
+        "titleBar.activeForeground": "#F3FEEC"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none",
+    "cSpell.words": [
+        "softmax"
+    ]
+}

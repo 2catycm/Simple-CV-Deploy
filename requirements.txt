@@ -7,6 +7,13 @@ pillow==10.0.0
 python-multipart==0.0.6
 numpy==1.25.2
 
+#
+websockets==11.0.3
+
+#
+tqdm==4.66.1
+aiofiles==23.2.1
+
 # 针对应用场景的依赖
 # 这里为了测试，使用手写数字识别来测试效果
 python-mnist==0.7
