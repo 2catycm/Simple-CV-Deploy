@@ -34,6 +34,7 @@ async def preprocess_image(image_np:np.ndarray):
     image_np = image_np / 255.0  # Normalize pixel values
     return image_np
 
+
 async def send_image():
     uri = f"ws://localhost:{config.server_port}{config.url_route}"
     start_time = time.time() 
@@ -69,13 +70,26 @@ async def send_image():
             # if i%suppose_fps == 0:
             if i%(int(i/wall_time)) == 0:
                 bar.set_postfix({"latency": f"{wall_time/i *1000:.4f} ms", 
-                                 "fps": f"{i/wall_time:.4f}", 
+                                "fps": f"{i/wall_time:.4f}", 
                                 #  "expected_fps": f"{suppose_fps}", 
                                 #  "utilization": f"{i/wall_time/suppose_fps*100:.2f} %",
-                                 "y_pred": result, 
-                                 "y_true": label, 
-                                 "rank":f"{rank}"})
+                                "y_pred": result, 
+                                "y_true": label, 
+                                "rank":f"{rank}"})
             # await asyncio.sleep(1/suppose_fps)  # Send image every 5 seconds
+async def main():
+    # wait_time = 1
+    # wait_time = 4
+    wait_time = 10
+    while True:
+        try:
+           await send_image()
+        except websockets.ConnectionClosedError:
+            print("Connection closed, attempting to reconnect...")
+            await asyncio.sleep(wait_time)  # Wait before attempting to reconnect
+        except ConnectionRefusedError:
+            print("Connection refused, attempting to reconnect...")
+            await asyncio.sleep(wait_time)
 
 if __name__ == "__main__":
-    asyncio.get_event_loop().run_until_complete(send_image())
+    asyncio.get_event_loop().run_until_complete(main())
